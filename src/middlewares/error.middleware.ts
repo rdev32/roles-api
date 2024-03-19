@@ -1,9 +1,9 @@
-import type { Request, Response, NextFunction } from 'express'
+import type { Request, Response } from 'express'
 import { prismaError } from 'prisma-better-errors'
-import { type HttpError } from 'http-errors'
+import { HttpError } from 'http-errors'
 import { z } from 'zod'
 
-export default function errorHandler (error: HttpError | z.ZodError, req: Request, res: Response, next: NextFunction): void {
+export default function errorHandler (error: unknown, req: Request, res: Response): void {
   try {
     if (error instanceof z.ZodError) {
       res.status(422).json(error.issues)
@@ -13,8 +13,10 @@ export default function errorHandler (error: HttpError | z.ZodError, req: Reques
         message: error.message,
         where: error.metaData
       })
+    } else if (error instanceof HttpError) {
+      res.status(error.status).json(error.message)
     } else {
-      res.status(error.status ?? 500).json(error.message ?? 'Internal server error.')
+      res.status(500).json('Internal server error.')
     }
   } catch (err) {
     console.error(err)
