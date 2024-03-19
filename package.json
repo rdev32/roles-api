@@ -5,7 +5,7 @@
   "author": "Renato Monroy",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "node build",
+    "start": "node dist",
     "build": "tsc",
     "dev": "nodemon --watch src -e ts --exec \"ts-node src\"",
     "format": "prettier --write .",
