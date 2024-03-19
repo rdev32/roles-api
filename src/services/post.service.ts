@@ -49,7 +49,7 @@ export async function read (id: string): Promise<unknown> {
   return post
 }
 
-export async function readAll (): Promise<Post[]> {
+export async function readAll (): Promise<unknown> {
   return await prisma.post.findMany()
 }
 
