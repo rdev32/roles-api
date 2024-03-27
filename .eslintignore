@@ -2,3 +2,5 @@ babel.config.js
 commitlint.config.js
 tsconfig.json
 dist
+build
+node_modules
